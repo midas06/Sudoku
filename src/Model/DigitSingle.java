@@ -10,4 +10,9 @@ public class DigitSingle implements Digit {
 	public int get() {
 		return this.theValue;
 	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(this.theValue);
+	}
 }

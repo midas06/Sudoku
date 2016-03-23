@@ -13,26 +13,46 @@ public class Cell {
 		return this.digit;
 	}
 	
-	public Cell (int newIndex, boolean isFixed) {
-		this.cellIndex = newIndex;
-		this.calcRowColumn(newIndex);
-		this.isFixed = isFixed;
+	public void setDigit(Digit newDigit) {
+		this.digit = newDigit;
 	}
+	
+//	public Cell (int newIndex) {
+//		this.cellIndex = newIndex;
+//		this.calcRowColumn(newIndex);
+//		this.digit = new DigitNull();
+//	}
 	
 	public Cell(int newIndex, GameImpl theGame) {
 		this.cellIndex = newIndex;
 		this.theGame = theGame;
-		this.calcRowColumn(newIndex);
+		this.calcRowColumn();
+		this.calcSquare();
+		this.digit = new DigitNull();
 	}
 	
-	protected void calcRowColumn(int cellIndex) {
-		double sqrt, row, column;
+	protected void calcRowColumn() {
+		double sqrt, row;
 		sqrt = Math.sqrt(theGame.getMaxValue());
 
-		row = (double)cellIndex / sqrt;
+		row = (double)this.cellIndex / sqrt;
 		this.rowIndex = (int)Math.floor(row);
 		
-		this.columnIndex = cellIndex % (int)sqrt;
+		this.columnIndex = this.cellIndex % (int)sqrt;
+	}
+	
+	protected void calcSquare() {
+		int squareWidth, squareHeight, numColSquares, numRowSquares, squareRow, squareCol;
+		squareWidth = this.theGame.getSquareWidth();
+		squareHeight = this.theGame.getSquareHeight();
+		numColSquares = (int)Math.sqrt(theGame.getMaxValue()) / squareHeight;
+		numRowSquares = (int)Math.sqrt(theGame.getMaxValue()) / squareWidth;
+		
+		squareCol = this.columnIndex / squareWidth;
+		squareRow = this.rowIndex / squareHeight;
+		
+		this.squareIndex = squareCol + squareRow * numRowSquares;
+		
 	}
 	
 	public int getRowIndex() {
@@ -45,6 +65,10 @@ public class Cell {
 	
 	public int getIndex() {
 		return this.cellIndex;
+	}
+	
+	public int getSquareIndex() {
+		return this.squareIndex;
 	}
 	
 	
