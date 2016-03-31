@@ -2,7 +2,7 @@ package Controller;
 
 import Model.GameImpl;
 import View.*;
-import Extras.*;
+import Extras.Maps;
 
 public class Controller {
 	protected GameImpl game;

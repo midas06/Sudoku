@@ -4,7 +4,6 @@ public class Cell {
 	
 	protected GameImpl theGame;
 	protected int cellIndex, rowIndex, columnIndex, squareIndex;
-	protected Helper helper;
 	protected Digit digit;
 	protected boolean isFixed;
 	
@@ -13,22 +12,17 @@ public class Cell {
 		return this.digit;
 	}
 	
-	public void setDigit(Digit newDigit) {
-		this.digit = newDigit;
+	public void addDigitValues(int[] newValues) {
+		this.digit.addValues(newValues);
 	}
 	
-//	public Cell (int newIndex) {
-//		this.cellIndex = newIndex;
-//		this.calcRowColumn(newIndex);
-//		this.digit = new DigitNull();
-//	}
 	
 	public Cell(int newIndex, GameImpl theGame) {
 		this.cellIndex = newIndex;
 		this.theGame = theGame;
 		this.calcRowColumn();
 		this.calcSquare();
-		this.digit = new DigitNull();
+		this.digit = new Digit();
 	}
 	
 	protected void calcRowColumn() {
@@ -54,6 +48,15 @@ public class Cell {
 		this.squareIndex = squareCol + squareRow * numRowSquares;
 		
 	}
+	
+	public void setFixed() {
+		this.isFixed = true;
+	}
+	
+	public void clear() {
+		this.digit.clear();
+	}
+	
 	
 	public int getRowIndex() {
 		return this.rowIndex;

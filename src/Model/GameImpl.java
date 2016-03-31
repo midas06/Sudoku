@@ -2,39 +2,20 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import Extras.InvalidDimensionException;
 
 public class GameImpl implements Game {//, Gets, Sets {
 	
 	private int maximum, squareWidth, squareHeight;
 	private List<Cell> thePuzzle;
+	private List<List<Cell>> moveHistory;
 	private PuzzleStringBuilder psb;
 
 	public GameImpl() {
 		this.psb = new PuzzleStringBuilder(this);
+		this.moveHistory = new ArrayList<List<Cell>>();
 	}
-	
-//	public List<Cell> getCellListByRow(int rowIndex) {
-//		List<Cell> theList = new ArrayList<Cell>();
-//		
-//		for (Cell c : this.puzzleArray) {
-//			if (c.getRowIndex() == rowIndex) {
-//				theList.add(c);
-//			}
-//		}
-//		return theList;
-//	}
-//	
-//	public List<Cell> getCellListByColumn(int columnIndex) {
-//		List<Cell> theList = new ArrayList<Cell>();
-//		
-//		for (Cell c : this.puzzleArray) {
-//			if (c.getColumnIndex() == columnIndex) {
-//				theList.add(c);
-//			}
-//		}
-//		return theList;
-//	}
-	
+		
 	public void init() {
 		int count = 0;
 		
@@ -49,24 +30,31 @@ public class GameImpl implements Game {//, Gets, Sets {
 		this.thePuzzle = newPuzzle;
 	}
 	
-	public void setMaxValue(int maximum) {
-		
-				
+	public void setMaxValue(int maximum) {				
 		this.maximum = maximum;
 		this.thePuzzle = new ArrayList<Cell>();
 		this.setSquares();
-		this.init();
-		
+		this.init();		
 	}
 	
 	public void setSquares() {
-		if (this.maximum == 81) {
-			this.setSquareHeight(3);
-			this.setSquareWidth(3);
-		} else if (this.maximum == 36) {
-			this.setSquareHeight(2);
-			this.setSquareWidth(3);
+		try {
+			if (this.maximum == 81) {
+				this.setSquareHeight(3);
+				this.setSquareWidth(3);
+			} else if (this.maximum == 36) {
+				this.setSquareHeight(2);
+				this.setSquareWidth(3);
+			} else if (this.maximum == 16) {
+				this.setSquareHeight(2);
+				this.setSquareWidth(2);
+			} else {
+				throw new InvalidDimensionException();
+			}
+		} catch (InvalidDimensionException e) {
+			System.out.println("Invalid puzzle dimensions");
 		}
+		
 	}
 	
     public int getMaxValue() {
@@ -98,24 +86,41 @@ public class GameImpl implements Game {//, Gets, Sets {
     }
     
     public void restart() {
-    	
-    }
-    
-    public void setValueByCoord(int newValue, int column, int row) {
-    	Cell theCell = this.thePuzzle.get(0);
-    	boolean isFound = false;
-    	for (Cell c : this.thePuzzle) {
-    		if (c.getColumnIndex() == column && c.getRowIndex() == row) {
-    			theCell = c;
-    			isFound = true;
+    	for(Cell c : this.thePuzzle) {
+    		if (!c.isFixed) {
+    			c.clear();
+    			this.moveHistory.clear();
     		}
     	}
-    	
-    	if (isFound) {
-        	DigitSingle d = new DigitSingle();
-        	d.setValue(newValue);
-        	theCell.setDigit(d); 
-    	}    	
+    }
+    
+    public Cell getCellByCoord(int column, int row) {
+    	List<Cell> byRow = PuzzleHelper.getCellListByRow(this.thePuzzle, row);
+    	return byRow.get(column);
+    }
+    
+    public Cell getCellBySquare(int squareNumber, int squareIndex) {
+    	List<Cell> bySq = PuzzleHelper.getCellListBySquare(this.thePuzzle, squareNumber);
+    	return bySq.get(squareIndex);
+    }
+    
+    
+    public void addSingleValue(int newValue, Cell theCell) {    	
+    	int[] arr = new int[1];
+		arr[0] = newValue;
+		theCell.addDigitValues(arr);    	
+    }
+    
+    public void addMultipleValues(int[] newValues, Cell theCell) {
+		theCell.addDigitValues(newValues);    
+    }
+    
+    protected void takeSnapshot() {
+    	this.moveHistory.add(this.thePuzzle);
+    }
+    
+    public void undo() {
+    	this.thePuzzle = this.moveHistory.get(this.moveHistory.size() - 1);
     }
     
     
