@@ -91,6 +91,9 @@ public class Maps {
 		
 		theCell = g.getCellBySquare(3, 3);
 		g.addSingleValue(6, theCell);
+		
+		g.finaliseInitialPuzzle();
+		
 	}
 	
 	

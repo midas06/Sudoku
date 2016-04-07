@@ -39,20 +39,5 @@ public final class PuzzleHelper {
 		
 		return theList;
 	}
-	
-//	public static List<Cell> initialisePuzzle(int maximum) {
-//		List<Cell> thePuzzle = new ArrayList<Cell>();
-//		
-//		int count = 0;
-//		
-//		while(count < maximum) {
-//			Cell c = new Cell(count);
-//			thePuzzle.add(c);
-//			count++;
-//		}
-//		
-//		return thePuzzle;		
-//	}
-	
-	
+
 }

@@ -1,19 +1,25 @@
 package Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import Extras.InvalidDimensionException;
+import org.apache.commons.lang3.*;
+import Extras.DeepCopier; 
 
 public class GameImpl implements Game {//, Gets, Sets {
 	
 	private int maximum, squareWidth, squareHeight;
 	private List<Cell> thePuzzle;
-	private List<List<Cell>> moveHistory;
+	public List<List<Cell>> moveHistory;
 	private PuzzleStringBuilder psb;
+	private boolean mapIsSet;
+	public List<byte[]> historyTest;
 
 	public GameImpl() {
 		this.psb = new PuzzleStringBuilder(this);
 		this.moveHistory = new ArrayList<List<Cell>>();
+		this.mapIsSet = false;
 	}
 		
 	public void init() {
@@ -33,6 +39,7 @@ public class GameImpl implements Game {//, Gets, Sets {
 	public void setMaxValue(int maximum) {				
 		this.maximum = maximum;
 		this.thePuzzle = new ArrayList<Cell>();
+		this.historyTest = new ArrayList<byte[]>();
 		this.setSquares();
 		this.init();		
 	}
@@ -57,8 +64,22 @@ public class GameImpl implements Game {//, Gets, Sets {
 		
 	}
 	
+	public void finaliseInitialPuzzle() {
+		this.mapIsSet = true;
+		for (Cell c : this.thePuzzle) {
+			c.setFixed();
+		}
+		this.takeSnapshot();
+	}
+	
+	
     public int getMaxValue() {
     	return this.maximum;
+    }
+    
+    public int getMaxDimension() {
+    	double d = Math.sqrt((double)this.maximum);
+    	return (int)d;
     }
     
     public List<Cell> getPuzzle() {
@@ -108,7 +129,11 @@ public class GameImpl implements Game {//, Gets, Sets {
     public void addSingleValue(int newValue, Cell theCell) {    	
     	int[] arr = new int[1];
 		arr[0] = newValue;
-		theCell.addDigitValues(arr);    	
+		theCell.addDigitValues(arr);
+		if (this.mapIsSet) {
+			this.takeSnapshot();
+		}
+		
     }
     
     public void addMultipleValues(int[] newValues, Cell theCell) {
@@ -116,11 +141,64 @@ public class GameImpl implements Game {//, Gets, Sets {
     }
     
     protected void takeSnapshot() {
-    	this.moveHistory.add(this.thePuzzle);
+    	//List<Cell> newSnapshot = SerializationUtils.clone((T) this.thePuzzle);
+//    	List<Cell> newSnapshot = new ArrayList<Cell>(this.thePuzzle.size());
+//    	for (Cell c : this.thePuzzle) {
+//    		newSnapshot.add(new Cell(c));
+//    	}
+//    	this.moveHistory.add(newSnapshot);
+    	
+    	try {
+    		byte[] serializedMap = DeepCopier.toByteStream(this.thePuzzle);
+    		this.historyTest.add(serializedMap);
+    	} catch (IOException e) {
+    		System.out.println("didnt work");
+    	}
+    	
+    	
     }
     
-    public void undo() {
+    public List<byte[]> testBytes(List<Cell> newPuzzle) {
+    	//List<Cell> newSnapshot = SerializationUtils.clone((T) this.thePuzzle);
+//    	List<Cell> newSnapshot = new ArrayList<Cell>(this.thePuzzle.size());
+//    	for (Cell c : this.thePuzzle) {
+//    		newSnapshot.add(new Cell(c));
+//    	}
+//    	this.moveHistory.add(newSnapshot);
+    	List<byte[]> serializedMap = new ArrayList<byte[]> ();
+    	try {
+    		for (Cell c : newPuzzle) {
+    			byte[] b = DeepCopier.toByteStream(c);
+        		serializedMap.add(b);
+    		}    		
+    		
+    	} catch (IOException e) {
+    		System.out.println("serialization error");
+    	}
+    	return serializedMap;    	
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<Cell> testDeserialization(byte[] input) {
+    	List<Cell> c = new ArrayList<Cell>();
+    	try {
+    		c = (List<Cell>)DeepCopier.toObject(input);
+    	} catch (IOException e) {
+    		System.out.println("deserialization error");
+    	} catch (ClassNotFoundException f) {
+    		System.out.println("deserialization error 2");
+    	}
+    	
+    	
+    	return c;
+    }
+    
+    public void undo() {    	
     	this.thePuzzle = this.moveHistory.get(this.moveHistory.size() - 1);
+    }
+    
+    public List<Cell> testUndo() {    	
+    	return this.moveHistory.get(this.moveHistory.size() - 2);
     }
     
     

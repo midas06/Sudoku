@@ -1,9 +1,13 @@
 package Model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
+import Extras.DeepCopier;
 
 public class Program {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		GameImpl g = new GameImpl();
 		g.setMaxValue(81);
 		//g.init();
@@ -51,42 +55,87 @@ public class Program {
 //		g.addSingleValueByCoord(5, 3, 5);
 //		g.addSingleValueByCoord(2, 4, 5);
 		
-		theCell = g.getCellBySquare(3, 3);
-		g.addSingleValue(6, theCell);
-		
-		
-		PuzzleStringBuilder psb = new PuzzleStringBuilder(g);
-		//psb.setPuzzle(g.getPuzzle());
-		System.out.println(psb.toString());
-		
-		
-//		List<Cell> l = PuzzleHelper.getCellListBySquare(g.getPuzzle(), 8);
-//		for (Cell c : l) {
-//			System.out.println(c.getIndex());
-//		}
+//		theCell = g.getCellBySquare(3, 3);
+//		g.addSingleValue(6, theCell);
+//		g.finaliseInitialPuzzle();
 //		
-		int max = (int)Math.sqrt(g.getMaxValue());
+//		
+//		PuzzleStringBuilder psb = new PuzzleStringBuilder(g);
+//		//psb.setPuzzle(g.getPuzzle());
+//		for (List<Cell> l : g.moveHistory) {
+//			psb.setPuzzle(l);
+//			System.out.println(g.moveHistory.indexOf(l));
+//			System.out.println(psb.generate(l));
+//		}
+//		//System.out.println(psb.toString());
+//		
+//		
+////		List<Cell> l = PuzzleHelper.getCellListBySquare(g.getPuzzle(), 8);
+////		for (Cell c : l) {
+////			System.out.println(c.getIndex());
+////		}
+////		
+////		int max = (int)Math.sqrt(g.getMaxValue());
+////		
+////		Checker c = new Checker(max);
+////		
+////		c.set(PuzzleHelper.getCellListByRow(g.getPuzzle(), 0));
+////		c.test();
+////		System.out.println(c.hasDuplicates());
+////		System.out.println(c.isComplete());
+////		
+////		c.set(PuzzleHelper.getCellListByColumn(g.getPuzzle(), 3));
+////		c.test();
+////		System.out.println(c.hasDuplicates());
+////		
+////		c.set(PuzzleHelper.getCellListBySquare(g.getPuzzle(), 1));
+////		c.test();
+////		System.out.println(c.hasDuplicates());
+////		System.out.println(c.isComplete());
+////		
+////		int[] values = g.getCellBySquare(0, 0).getDigit().getValues();
+////		for (int i : values) {
+////			System.out.println(i);
+////		}
+//		
+//		theCell = g.getCellByCoord(3, 2);
+//		g.addSingleValue(5, theCell);
+//		//System.out.println(psb.toString());
+//		
+//		theCell = g.getCellByCoord(8, 2);
+//		g.addSingleValue(5, theCell);
+//		
+//
+//		System.out.println(g.moveHistory.size());
+//		
+//		for (List<Cell> c : g.moveHistory) {
+//			System.out.println(psb.generate(c));
+//		}
 		
-		Checker c = new Checker(max);
+//		List<Cell> c = g.getPuzzle();
+//		
+//		List<byte[]> b = g.testBytes(c);
+//		
+		//List<Cell> f = g.testDeserialization(b);
 		
-		c.set(PuzzleHelper.getCellListByRow(g.getPuzzle(), 0));
-		c.test();
-		System.out.println(c.hasDuplicates());
-		System.out.println(c.isComplete());
+		byte[] bs;
+//		try {
+//			bs = DeepCopier.toByteStream(theCell);
+//		} catch (IOException e) {
+//			System.out.println("nope");
+//		}
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(baos);		
 		
-		c.set(PuzzleHelper.getCellListByColumn(g.getPuzzle(), 3));
-		c.test();
-		System.out.println(c.hasDuplicates());
+		Cell c = new Cell(0, g);
 		
-		c.set(PuzzleHelper.getCellListBySquare(g.getPuzzle(), 1));
-		c.test();
-		System.out.println(c.hasDuplicates());
-		System.out.println(c.isComplete());
 		
-		int[] values = g.getCellBySquare(0, 0).getDigit().getValues();
-		for (int i : values) {
-			System.out.println(i);
-		}
+		
+		
+		bs = baos.toByteArray();
+		
+		
+		
 		
 	}
 }

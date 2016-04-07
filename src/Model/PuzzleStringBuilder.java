@@ -36,6 +36,35 @@ public final class PuzzleStringBuilder {
 		
 	}
 	
+	public String generate(List<Cell> thePuz) {
+		StringBuilder sb = new StringBuilder();
+		
+		int maxHeight = (int)Math.sqrt(thePuz.size());
+		int count = 0;
+		
+		sb.append(this.generateLineBreak(maxHeight) + "\n");
+				
+		while(count < maxHeight) {
+			sb.append(this.tgenerateRow(count, thePuz) + "\n");
+			sb.append(this.generateLineBreak(maxHeight) + "\n");
+			count++;
+		}
+		
+		return sb.toString();
+	}
+	
+	protected String tgenerateRow(int rowIndex, List<Cell> thePuz) {
+		StringBuilder sb = new StringBuilder();
+		List<Cell> theRow = PuzzleHelper.getCellListByRow(thePuz, rowIndex);
+		
+		sb.append("|");
+		
+		for (Cell c : theRow) {
+			sb.append(" " + c.getDigit().toString() + " |");
+		}
+		
+		return sb.toString();		
+	}
 	
 	protected String generateRow(int rowIndex) {
 		StringBuilder sb = new StringBuilder();

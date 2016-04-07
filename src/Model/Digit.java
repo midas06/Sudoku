@@ -25,6 +25,7 @@ public class Digit {
 		return output;
 	}
 	
+	@Override
 	public String toString() {
 		String s;
 		
@@ -36,8 +37,7 @@ public class Digit {
 			s = "M";
 		}
 			
-		return s;
-		
+		return s;		
 	}
 	
 	public void clear() {
