@@ -44,4 +44,39 @@ public class Digit {
 		this.allValues.clear();
 	}
 	
+	
+	public String serialize() {
+		StringBuilder sb = new StringBuilder();
+		
+		if (this.allValues.size() > 0) {
+			int[] temp = this.getValues();
+			
+			for (int i = 0; i < temp.length - 1; i++) {
+				sb.append(temp[i] + ";");
+			}
+			
+			sb.append(temp[temp.length - 1]);
+		}
+				
+		//return this.allValues.size() > -1 ? sb.toString() : "";
+		return sb.toString();
+	}
+	
+	public void deserialize(String s) {
+		String[] temp = s.split(";");
+		int[] intA = new int[temp.length];
+		
+		for (int i = 0; i < temp.length; i++) {
+			intA[i] = Integer.valueOf(temp[i]);
+		}
+		
+		this.addValues(intA);		
+	}
+	
+
+	
+	
 }
+	
+	
+

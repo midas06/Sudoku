@@ -1,13 +1,15 @@
 package Model;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 import Extras.DeepCopier;
 
 public class Program {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		GameImpl g = new GameImpl();
 		g.setMaxValue(81);
 		//g.init();
@@ -60,7 +62,7 @@ public class Program {
 //		g.finaliseInitialPuzzle();
 //		
 //		
-//		PuzzleStringBuilder psb = new PuzzleStringBuilder(g);
+		PuzzleStringBuilder psb = new PuzzleStringBuilder(g);
 //		//psb.setPuzzle(g.getPuzzle());
 //		for (List<Cell> l : g.moveHistory) {
 //			psb.setPuzzle(l);
@@ -98,44 +100,49 @@ public class Program {
 ////			System.out.println(i);
 ////		}
 //		
-//		theCell = g.getCellByCoord(3, 2);
-//		g.addSingleValue(5, theCell);
-//		//System.out.println(psb.toString());
+//		Digit d = new Digit();
+//		//int[] a = new int[] {2, 3, 4};
 //		
-//		theCell = g.getCellByCoord(8, 2);
-//		g.addSingleValue(5, theCell);
+//		int[] a = new int[] {1};
 //		
-//
-//		System.out.println(g.moveHistory.size());
+//		d.addValues(a);
 //		
-//		for (List<Cell> c : g.moveHistory) {
-//			System.out.println(psb.generate(c));
-//		}
-		
-//		List<Cell> c = g.getPuzzle();
+//		String str = d.serialize();
+//		System.out.println(str);
 //		
-//		List<byte[]> b = g.testBytes(c);
+//		Digit e = new Digit();
+//		e.deserialize(str);
 //		
-		//List<Cell> f = g.testDeserialization(b);
+//		System.out.println(e.toString());
+//		
+//		String srlc = theCell.serialize();
+//		
+//		System.out.println(srlc);
+//		
+//		Cell newC = new Cell(g);
+//		
+//		
+//		newC.deserialize(srlc);
+//		
+//		System.out.println(theCell.getValues());
+//		System.out.println(newC.getValues());
 		
-		byte[] bs;
-//		try {
-//			bs = DeepCopier.toByteStream(theCell);
-//		} catch (IOException e) {
-//			System.out.println("nope");
-//		}
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ObjectOutputStream oos = new ObjectOutputStream(baos);		
-		
-		Cell c = new Cell(0, g);
+		System.out.println(psb.toString());
+		g.finaliseInitialPuzzle();
+		theCell = g.getCellByCoord(5, 5);
+		g.addSingleValue(6, theCell);
+		theCell = g.getCellByCoord(6, 5);
+		g.addSingleValue(7, theCell);
+		//List<String> strl= g.serialize();
 		
 		
+		System.out.println(psb.toString());
 		
+		System.out.println(g.moveHistory.size());
 		
-		bs = baos.toByteArray();
-		
-		
-		
+		g.undo();
+		System.out.println(psb.toString());
+		System.out.println(g.moveHistory.size());
 		
 	}
 }

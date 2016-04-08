@@ -25,7 +25,11 @@ public final class DeepCopier {
 	
 	static public Object toObject(byte[] aByteStream) throws ClassNotFoundException, IOException {
 		ByteArrayInputStream bais = new ByteArrayInputStream(aByteStream);
-		return (Object) new ObjectInputStream(bais).readObject();
+		//return (Object) new ObjectInputStream(bais).readObject();
+		ObjectInputStream ois = new ObjectInputStream(bais);
+		return ois.readObject();
 	}
+	
+	
 
 }

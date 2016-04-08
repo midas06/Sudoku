@@ -1,28 +1,12 @@
 package Model;
 
-import java.io.IOException;
-import java.io.InvalidObjectException;
-import java.io.ObjectInputValidation;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
-public class Cell implements Serializable, ObjectInputValidation{
+public class Cell {
 	
 	protected GameImpl theGame;
 	protected int cellIndex, rowIndex, columnIndex, squareIndex;
 	protected Digit digit;
 	protected boolean isFixed;
-	
-	public Cell(Cell cell) {
-		this.cellIndex = cell.getIndex();
-		this.rowIndex = cell.getRowIndex();
-		this.columnIndex = cell.getColumnIndex();
-		this.squareIndex = cell.getSquareIndex();
-		this.theGame = this.getGame();
-		this.digit = cell.getDigit();
-		this.isFixed = cell.getIsFixed();
-	}
-	
+
 	public GameImpl getGame() {
 		return this.theGame;
 	}
@@ -33,6 +17,11 @@ public class Cell implements Serializable, ObjectInputValidation{
 	
 	public void addDigitValues(int[] newValues) {
 		this.digit.addValues(newValues);
+	}	
+	
+	public Cell(GameImpl theGame) {
+		this.theGame = theGame;
+		this.digit = new Digit();
 	}
 	
 	
@@ -96,32 +85,63 @@ public class Cell implements Serializable, ObjectInputValidation{
 	public boolean getIsFixed() {
 		return this.isFixed;
 	}
+	
+	public String serialize() {
+		String srlDigit = "[" + this.digit.serialize();
+		StringBuilder sb = new StringBuilder();
+		if (this.isFixed) {
+			sb.append("f");
+		} else {
+			sb.append("n");
+		}
+		sb.append("$" + this.cellIndex);
+		sb.append(srlDigit);
+		
+		return sb.toString();						
+	}
+	
+	public void deserialize(String s) {
+		String[] tempArray;
+		String tempStr, digitStr;
+		boolean fixed;
+		int index;
+		// isFixed?
+		tempArray = s.split("\\$");
 
-	@Override
-	public void validateObject() throws InvalidObjectException {
-		System.out.println("validated");
+		fixed = tempArray[0].equals("f") ? true : false;
+		
+		// digit & cell index
+		tempStr = tempArray[1];
+		tempArray = tempStr.split("\\[");
+		
+		index = Integer.valueOf(tempArray[0]);
+		if (tempArray.length > 1) {
+			digitStr = tempArray[1];
+			this.digit.deserialize(digitStr);
+		}
+						
+		this.isFixed = fixed;
+		this.cellIndex = index;
+		
+		this.calcRowColumn();
+		this.calcSquare();		
+	}
+	
+	
+	public String getValues() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("CellI: " + this.cellIndex);
+		sb.append("RowI: " + this.rowIndex);
+		sb.append("ColI: " + this.columnIndex);
+		sb.append("SquareI: " + this.squareIndex);
+		sb.append("Digit: " + this.digit.toString());
+		sb.append("Fixed: " + this.isFixed);
+		
+		return sb.toString();
 		
 	}
 	
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-		System.out.println("writing");
-		out.defaultWriteObject();
-	}
-	
-	private Object writeReplace() throws ObjectStreamException {
-        System.out.println("writeReplace");
-        return this;
-    }
- 
-    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-        System.out.println("readObject");
-        in.registerValidation(this, 0);
-        in.defaultReadObject();
-    }
-    
-    private Object readResolve() throws ObjectStreamException {
-        System.out.println("readResolve");
-        return this;
-    }
-	
 }
+    
+
