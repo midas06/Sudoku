@@ -37,10 +37,8 @@ public class Checker {
 		}	
 	}
 	
-	public void test() {
-		for (int i : this.usedValues) {
-			System.out.println(i);
-		}
+	public List<Integer> getUsedValues() {
+		return this.usedValues;
 	}
 	
 	public boolean hasDuplicates() {
@@ -54,14 +52,38 @@ public class Checker {
 		return false;
 	}
 	
-	public boolean isComplete() {
+	public List<Integer> acceptableArrayToList() {
 		List<Integer> comparisonList = new ArrayList<Integer>();
 		for (int i = 0; i < this.acceptableValues.length; i++) {
 			comparisonList.add(this.acceptableValues[i]);
 		}
+		return comparisonList;
+	}
+	
+	public boolean isComplete() {
+		
+		for (Cell c : this.theList) {
+			if (c.getDigit().getValues().length != 1) {
+				return false;
+			}
+		}
+		
+		List<Integer> comparisonList = this.acceptableArrayToList();
 		
 		Collections.sort(this.usedValues);
 		
 		return comparisonList.equals(this.usedValues);
 	}
+	// stream photos?
+	
+	public List<Integer> getUnusedValues() {
+		Set<Integer> unusedHash = new HashSet<Integer>(this.acceptableArrayToList());
+		Set<Integer> usedHash = new HashSet<Integer>(this.usedValues);
+		
+		unusedHash.removeAll(usedHash);
+		return new ArrayList<Integer>(unusedHash);
+	}
+	
+		
+		
 }

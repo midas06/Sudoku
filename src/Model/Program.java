@@ -127,22 +127,41 @@ public class Program {
 //		System.out.println(theCell.getValues());
 //		System.out.println(newC.getValues());
 		
-		System.out.println(psb.toString());
+//		System.out.println(psb.toString());
 		g.finaliseInitialPuzzle();
-		theCell = g.getCellByCoord(5, 5);
-		g.addSingleValue(6, theCell);
-		theCell = g.getCellByCoord(6, 5);
-		g.addSingleValue(7, theCell);
-		//List<String> strl= g.serialize();
-		
-		
+//		theCell = g.getCellByCoord(5, 5);
+//		g.addSingleValue(6, theCell);
+//		theCell = g.getCellByCoord(6, 5);
+//		g.addSingleValue(7, theCell);
+//		//List<String> strl= g.serialize();
+//		
+//		
+//		System.out.println(psb.toString());
+//		
+//		System.out.println(g.moveHistory.size());
+//		
+//		g.undo();
+//		System.out.println(psb.toString());
+//		System.out.println(g.moveHistory.size());
+//		
+//		g.restart();
+//		System.out.println(psb.toString());
+//		
+//		System.out.println(g.moveHistory.size());
+//		
 		System.out.println(psb.toString());
+		Checker ch = new Checker(g.getMaxDimension());
+		ch.set(PuzzleHelper.getCellListByColumn(g.getPuzzle(), 3));
 		
-		System.out.println(g.moveHistory.size());
+		List<Integer> intList;
 		
-		g.undo();
-		System.out.println(psb.toString());
-		System.out.println(g.moveHistory.size());
+		intList = ch.getUnusedValues();
+		
+		for (Integer i : intList) {
+			System.out.println(i);
+		}
+		
+		
 		
 	}
 }

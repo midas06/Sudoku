@@ -103,12 +103,17 @@ public class GameImpl implements Game {
     }
     
     public void restart() {
-    	for(Cell c : this.thePuzzle) {
-    		if (!c.isFixed) {
-    			c.clear();
-    			this.moveHistory.clear();
-    		}
+    	List<Cell> initialState = new ArrayList<Cell>();
+    	
+    	for (String s : this.moveHistory.get(0)) {
+    		Cell c = new Cell(this);
+    		c.deserialize(s);
+    		initialState.add(c);
     	}
+    	
+    	this.thePuzzle = initialState;
+    	this.moveHistory.clear();
+    	this.takeSnapshot();
     }
     
     public Cell getCellByCoord(int column, int row) {
@@ -139,8 +144,7 @@ public class GameImpl implements Game {
     protected void takeSnapshot() {
     	if (this.mapIsSet) {
     		this.moveHistory.add(this.serialize());
-    	}
-    	
+    	}    	
     }
     
     public void undo() {    	
@@ -154,10 +158,7 @@ public class GameImpl implements Game {
     	
     	this.thePuzzle = pastMove;
     	this.moveHistory.remove(this.moveHistory.size() - 1);
-    }
-    
-    
-    
+    }    
     
     public String exportMap() {
     	return this.psb.toString();
@@ -171,6 +172,36 @@ public class GameImpl implements Game {
     	return srlPuzzle;
     }
     
+    public int getMoveCount() {
+    	return this.moveHistory.size() - 1;
+    }
+    
+    
+    public boolean isSolved() {
+    	Checker c = new Checker(this.getMaxDimension());
+    	for (int i = 0; i < this.getMaxDimension(); i++) {
+    		c.set(PuzzleHelper.getCellListByColumn(this.thePuzzle, i));
+    		if (!c.isComplete()) {
+    			return false;
+    		}
+    	}
+    	
+    	for (int i = 0; i < this.getMaxDimension(); i++) {
+    		c.set(PuzzleHelper.getCellListByRow(this.thePuzzle, i));
+    		if (!c.isComplete()) {
+    			return false;
+    		}
+    	}
+    	
+    	for (int i = 0; i < this.getMaxDimension(); i++) {
+    		c.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, i));
+    		if (!c.isComplete()) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
 
 }
 
