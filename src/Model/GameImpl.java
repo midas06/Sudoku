@@ -3,7 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 import Extras.InvalidDimensionException;
-import Extras.DeepCopier; 
 
 public class GameImpl implements Game {
 	
@@ -182,20 +181,23 @@ public class GameImpl implements Game {
     	for (int i = 0; i < this.getMaxDimension(); i++) {
     		c.set(PuzzleHelper.getCellListByColumn(this.thePuzzle, i));
     		if (!c.isComplete()) {
+    			System.out.println("col: " + i);
     			return false;
     		}
     	}
     	
-    	for (int i = 0; i < this.getMaxDimension(); i++) {
-    		c.set(PuzzleHelper.getCellListByRow(this.thePuzzle, i));
+    	for (int j = 0; j < this.getMaxDimension(); j++) {
+    		c.set(PuzzleHelper.getCellListByRow(this.thePuzzle, j));
     		if (!c.isComplete()) {
+    			System.out.println("row: " + j);
     			return false;
     		}
     	}
     	
-    	for (int i = 0; i < this.getMaxDimension(); i++) {
-    		c.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, i));
+    	for (int k = 0; k < this.getMaxDimension(); k++) {
+    		c.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, k));
     		if (!c.isComplete()) {
+    			System.out.println("sq: " + k);
     			return false;
     		}
     	}
