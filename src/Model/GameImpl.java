@@ -129,9 +129,9 @@ public class GameImpl implements Game, Gets, Sets {
     	return byRow.get(columnIndex);
     }
     
-    public Cell getCellBySquare(int squareIndex, int positionIndex) {
-    	List<Cell> bySq = PuzzleHelper.getCellListBySquare(this.thePuzzle, positionIndex);
-    	return bySq.get(squareIndex);
+    public Cell getCellBySquare(int cellIndex, int theSquare) {
+    	List<Cell> bySq = PuzzleHelper.getCellListBySquare(this.thePuzzle, theSquare);
+    	return bySq.get(cellIndex);
     }
     
     
@@ -197,7 +197,7 @@ public class GameImpl implements Game, Gets, Sets {
     	for (int i = 0; i < this.getMaxDimension(); i++) {
     		this.checker.set(PuzzleHelper.getCellListByColumn(this.thePuzzle, i));
     		if (!this.checker.isComplete()) {
-    			System.out.println("col: " + i);
+//    			System.out.println("col: " + i);
     			return false;
     		}
     	}
@@ -205,7 +205,7 @@ public class GameImpl implements Game, Gets, Sets {
     	for (int j = 0; j < this.getMaxDimension(); j++) {
     		this.checker.set(PuzzleHelper.getCellListByRow(this.thePuzzle, j));
     		if (!this.checker.isComplete()) {
-    			System.out.println("row: " + j);
+//    			System.out.println("row: " + j);
     			return false;
     		}
     	}
@@ -213,7 +213,7 @@ public class GameImpl implements Game, Gets, Sets {
     	for (int k = 0; k < this.getMaxDimension(); k++) {
     		this.checker.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, k));
     		if (!this.checker.isComplete()) {
-    			System.out.println("sq: " + k);
+//    			System.out.println("sq: " + k);
     			return false;
     		}
     	}
@@ -234,13 +234,30 @@ public class GameImpl implements Game, Gets, Sets {
     	Set<Integer> columnPossible = new HashSet<Integer> (this.checker.getUnusedValues());
     	Set<Integer> columnImpossible = new HashSet<Integer> (this.checker.getUsedValues());
     	
+    	this.checker.set(PuzzleHelper.getCellListBySquare(this.getPuzzle(), theCell.getSquareIndex()));
+    	Set<Integer> squarePossible = new HashSet<Integer> (this.checker.getUnusedValues());
+    	Set<Integer> squareImpossible = new HashSet<Integer> (this.checker.getUsedValues());
+    	
     	rowPossible.removeAll(columnImpossible);
+    	rowPossible.removeAll(squareImpossible);
     	columnPossible.removeAll(rowImpossible);
+    	columnPossible.removeAll(squareImpossible);
+    	squarePossible.removeAll(columnImpossible);
+    	squarePossible.removeAll(rowImpossible);
     	
     	rowPossible.addAll(columnPossible);
+    	rowPossible.addAll(squarePossible);
     	
     	return new ArrayList<Integer>(rowPossible);
     	
+    }
+    
+    public List<Integer> getAllImpossibleValues(Cell theCell) {
+    	Set<Integer> possibleValues = new HashSet<Integer> (this.getAllPossibleValues(theCell));
+    	Set<Integer> acceptableValues = new HashSet<Integer> (this.checker.acceptableArrayToList());
+    	
+    	acceptableValues.removeAll(possibleValues);
+    	return new ArrayList<Integer>(acceptableValues);
     }
     
 

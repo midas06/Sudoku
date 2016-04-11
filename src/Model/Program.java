@@ -271,25 +271,131 @@ public class Program {
 		
 		
 		g = new GameImpl();
-		g.setMaxValue(36);
-		g.setSingleValue(1, g.getCellByCoord(1, 0));
-		g.setSingleValue(6, g.getCellByCoord(2, 0));
-		g.setSingleValue(5, g.getCellByCoord(4, 0));
+//		g.setMaxValue(36);
+//		g.setSingleValue(1, g.getCellByCoord(1, 0));
+//		g.setSingleValue(6, g.getCellByCoord(2, 0));
+//		g.setSingleValue(5, g.getCellByCoord(4, 0));
+//		
+//		g.setSingleValue(6, g.getCellByCoord(4, 1));
+//		g.setSingleValue(2, g.getCellByCoord(5, 1));
+//		
+//		g.setSingleValue(6, g.getCellByCoord(5, 2));
+//		
+//		g.setSingleValue(3, g.getCellByCoord(0, 3));
+//		
+//		g.setSingleValue(5, g.getCellByCoord(0, 4));
+//		g.setSingleValue(3, g.getCellByCoord(1, 4));
+//		
+//		g.setSingleValue(4, g.getCellByCoord(1, 5));
+//		g.setSingleValue(5, g.getCellByCoord(3, 5));
+//		g.setSingleValue(2, g.getCellByCoord(4, 5));
 		
-		g.setSingleValue(6, g.getCellByCoord(4, 1));
-		g.setSingleValue(2, g.getCellByCoord(5, 1));
+//		g.setSingleValue(2, g.getCellByCoord(0, 0));
+//		g.setSingleValue(1, g.getCellByCoord(1, 0));
+//		g.setSingleValue(6, g.getCellByCoord(2, 0));
+//		g.setSingleValue(3, g.getCellByCoord(3, 0));
+//		g.setSingleValue(5, g.getCellByCoord(4, 0));
+//		g.setSingleValue(4, g.getCellByCoord(5, 0));
+//		
+//		g.setSingleValue(4, g.getCellByCoord(0, 1));
+//		g.setSingleValue(5, g.getCellByCoord(1, 1));
+//		g.setSingleValue(3, g.getCellByCoord(2, 1));
+//		g.setSingleValue(1, g.getCellByCoord(3, 1));
+//		g.setSingleValue(6, g.getCellByCoord(4, 1));
+//		g.setSingleValue(2, g.getCellByCoord(5, 1));
+//		
+//		g.setSingleValue(1, g.getCellByCoord(0, 2));
+//		g.setSingleValue(2, g.getCellByCoord(1, 2));
+//		g.setSingleValue(5, g.getCellByCoord(2, 2));
+//		g.setSingleValue(4, g.getCellByCoord(3, 2));
+//		g.setSingleValue(3, g.getCellByCoord(4, 2));
+//		g.setSingleValue(6, g.getCellByCoord(5, 2));
+//		
+//		g.setSingleValue(3, g.getCellByCoord(0, 3));
+//		g.setSingleValue(6, g.getCellByCoord(1, 3));
+//		g.setSingleValue(4, g.getCellByCoord(2, 3));
+//		g.setSingleValue(2, g.getCellByCoord(3, 3));
+//		g.setSingleValue(1, g.getCellByCoord(4, 3));
+//		g.setSingleValue(5, g.getCellByCoord(5, 3));
+//		
+//		g.setSingleValue(5, g.getCellByCoord(0, 4));
+//		g.setSingleValue(3, g.getCellByCoord(1, 4));
+//		g.setSingleValue(2, g.getCellByCoord(2, 4));
+//		g.setSingleValue(6, g.getCellByCoord(3, 4));
+//		g.setSingleValue(4, g.getCellByCoord(4, 4));
+//		g.setSingleValue(1, g.getCellByCoord(5, 4));
+//		
+//		g.setSingleValue(6, g.getCellByCoord(0, 5));
+//		g.setSingleValue(4, g.getCellByCoord(1, 5));
+//		g.setSingleValue(1, g.getCellByCoord(2, 5));
+//		g.setSingleValue(5, g.getCellByCoord(3, 5));
+//		g.setSingleValue(2, g.getCellByCoord(4, 5));
+//		g.setSingleValue(3, g.getCellByCoord(5, 5));
 		
-		g.setSingleValue(6, g.getCellByCoord(5, 2));
 		
-		g.setSingleValue(3, g.getCellByCoord(0, 3));
+//		
+//		g.setMaxValue(16);
+//		g.setSingleValue(1, g.getCellByCoord(0, 0));
+//		g.setSingleValue(4, g.getCellByCoord(1, 0));
+//		g.setSingleValue(3, g.getCellByCoord(2, 0));
+//		g.setSingleValue(2, g.getCellByCoord(3, 0));
+//		
+//		g.setSingleValue(3, g.getCellByCoord(0, 1));
+//		g.setSingleValue(2, g.getCellByCoord(1, 1));
+//		g.setSingleValue(4, g.getCellByCoord(2, 1));
+//		g.setSingleValue(1, g.getCellByCoord(3, 1));
+//		
+//		g.setSingleValue(4, g.getCellByCoord(0, 2));
+//		g.setSingleValue(1, g.getCellByCoord(1, 2));
+//		g.setSingleValue(2, g.getCellByCoord(2, 2));
+//		g.setSingleValue(3, g.getCellByCoord(3, 2));
+//		
+//		g.setSingleValue(2, g.getCellByCoord(0, 3));
+//		g.setSingleValue(3, g.getCellByCoord(1, 3));
+//		g.setSingleValue(1, g.getCellByCoord(2, 3));
+//		g.setSingleValue(4, g.getCellByCoord(3, 3));
+			
+		g = new GameImpl();
+		g.setMaxValue(81);
+		g.setSingleValue(8, g.getCellByCoord(0, 0));
+		g.setSingleValue(6, g.getCellByCoord(1, 0));
+		g.setSingleValue(2, g.getCellByCoord(4, 0));
 		
-		g.setSingleValue(5, g.getCellByCoord(0, 4));
-		g.setSingleValue(3, g.getCellByCoord(1, 4));
+		g.setSingleValue(7, g.getCellByCoord(3, 1));
+		g.setSingleValue(5, g.getCellByCoord(7, 1));
+		g.setSingleValue(9, g.getCellByCoord(8, 1));
 		
-		g.setSingleValue(4, g.getCellByCoord(1, 5));
-		g.setSingleValue(5, g.getCellByCoord(3, 5));
-		g.setSingleValue(2, g.getCellByCoord(4, 5));
+		g.setSingleValue(6, g.getCellByCoord(4, 3));
+		g.setSingleValue(8, g.getCellByCoord(6, 3));
+		
+		g.setSingleValue(4, g.getCellByCoord(1, 4));
+		
+		g.setSingleValue(5, g.getCellByCoord(2, 5));
+		g.setSingleValue(3, g.getCellByCoord(3, 5));
+		g.setSingleValue(7, g.getCellByCoord(8, 5));
+		
+		g.setSingleValue(2, g.getCellByCoord(1, 7));
+		g.setSingleValue(6, g.getCellByCoord(6, 7));
+		
+		g.setSingleValue(7, g.getCellByCoord(2, 8));
+		g.setSingleValue(5, g.getCellByCoord(3, 8));
+		g.setSingleValue(9, g.getCellByCoord(5, 8));
+		
+		g.setSingleValue(1, g.getCellBySquare(0, 1));
+		g.setSingleValue(3, g.getCellBySquare(2, 1));
+		g.setSingleValue(4, g.getCellBySquare(4, 1));
+		g.setSingleValue(5, g.getCellBySquare(5, 1));
+		g.setSingleValue(6, g.getCellBySquare(6, 1));
+		g.setSingleValue(8, g.getCellBySquare(7, 1));
+		g.setSingleValue(9, g.getCellBySquare(8, 1));
+		
+		
+		
+		g.finaliseInitialPuzzle();
 		
 		System.out.println(g.exportMap());
+
+		
+		System.out.println(g.isSolved());
 	}
 }
