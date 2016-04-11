@@ -83,7 +83,7 @@ public class Controller {
 		String s = this.view.setStr("Add a value");
 		if (this.strToIntChecker(s)) {
 			int newValue = Integer.parseInt(s);
-			game.addSingleValue(newValue, theCell);
+			game.setSingleValue(newValue, theCell);
 			this.view.display(this.game.exportMap());
 			this.undo();
 			//this.select();

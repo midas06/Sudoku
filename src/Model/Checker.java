@@ -6,15 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Checker {
+public class Checker implements Validating, HintPossible, HintImpossible {
 	
 	protected List<Cell> theList;
 	protected int[] acceptableValues;
 	protected List<Integer> usedValues;
-	
-	public Checker(int maxValue) {
-		this.init(maxValue);
-	}
 	
 	protected void init(int maxValue) {
 		this.acceptableValues = new int[maxValue];
@@ -74,6 +70,8 @@ public class Checker {
 		
 		return comparisonList.equals(this.usedValues);
 	}
+	
+	
 	// stream photos?
 	
 	public List<Integer> getUnusedValues() {
@@ -83,6 +81,7 @@ public class Checker {
 		unusedHash.removeAll(usedHash);
 		return new ArrayList<Integer>(unusedHash);
 	}
+	
 	
 		
 		

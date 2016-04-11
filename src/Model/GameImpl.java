@@ -1,12 +1,16 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import Extras.InvalidDimensionException;
 
-public class GameImpl implements Game {
+public class GameImpl implements Game, Gets, Sets {
 	
 	private int maximum, squareWidth, squareHeight;
+	private Checker checker;
 	protected List<Cell> thePuzzle;
 	public List<List<String>> moveHistory;
 	private PuzzleStringBuilder psb;
@@ -14,6 +18,7 @@ public class GameImpl implements Game {
 
 	public GameImpl() {
 		this.psb = new PuzzleStringBuilder(this);
+		this.checker = new Checker();
 		this.moveHistory = new ArrayList<List<String>>();
 		this.mapIsSet = false;
 	}
@@ -26,6 +31,8 @@ public class GameImpl implements Game {
 			this.thePuzzle.add(c);
 			count++;
 		}
+		
+		this.checker.init(this.getMaxDimension());
 	}
 	
 	public void setPuzzle(List<Cell> newPuzzle) {
@@ -62,7 +69,9 @@ public class GameImpl implements Game {
 	public void finaliseInitialPuzzle() {
 		this.mapIsSet = true;
 		for (Cell c : this.thePuzzle) {
-			c.setFixed();
+			if (c.digit.getValues().length > 0) {
+				c.setFixed();
+			}			
 		}
 		this.takeSnapshot();
 	}
@@ -115,18 +124,18 @@ public class GameImpl implements Game {
     	this.takeSnapshot();
     }
     
-    public Cell getCellByCoord(int column, int row) {
-    	List<Cell> byRow = PuzzleHelper.getCellListByRow(this.thePuzzle, row);
-    	return byRow.get(column);
+    public Cell getCellByCoord(int columnIndex, int rowIndex) {
+    	List<Cell> byRow = PuzzleHelper.getCellListByRow(this.thePuzzle, rowIndex);
+    	return byRow.get(columnIndex);
     }
     
-    public Cell getCellBySquare(int squareNumber, int squareIndex) {
-    	List<Cell> bySq = PuzzleHelper.getCellListBySquare(this.thePuzzle, squareNumber);
+    public Cell getCellBySquare(int squareIndex, int positionIndex) {
+    	List<Cell> bySq = PuzzleHelper.getCellListBySquare(this.thePuzzle, positionIndex);
     	return bySq.get(squareIndex);
     }
     
     
-    public void addSingleValue(int newValue, Cell theCell) {    	
+    public void setSingleValue(int newValue, Cell theCell) {    	
     	int[] arr = new int[1];
 		arr[0] = newValue;
 		theCell.addDigitValues(arr);
@@ -136,8 +145,11 @@ public class GameImpl implements Game {
 		
     }
     
-    public void addMultipleValues(int[] newValues, Cell theCell) {
-		theCell.addDigitValues(newValues);    
+    public void setMultipleValues(int[] newValues, Cell theCell) {
+		theCell.addDigitValues(newValues);
+		if (this.mapIsSet) {
+			this.takeSnapshot();
+		}
     }
     
     protected void takeSnapshot() {
@@ -175,28 +187,32 @@ public class GameImpl implements Game {
     	return this.moveHistory.size() - 1;
     }
     
+    public void clearCell(Cell c) {
+    	c.clear();
+    	this.takeSnapshot();
+    }
+    
     
     public boolean isSolved() {
-    	Checker c = new Checker(this.getMaxDimension());
     	for (int i = 0; i < this.getMaxDimension(); i++) {
-    		c.set(PuzzleHelper.getCellListByColumn(this.thePuzzle, i));
-    		if (!c.isComplete()) {
+    		this.checker.set(PuzzleHelper.getCellListByColumn(this.thePuzzle, i));
+    		if (!this.checker.isComplete()) {
     			System.out.println("col: " + i);
     			return false;
     		}
     	}
     	
     	for (int j = 0; j < this.getMaxDimension(); j++) {
-    		c.set(PuzzleHelper.getCellListByRow(this.thePuzzle, j));
-    		if (!c.isComplete()) {
+    		this.checker.set(PuzzleHelper.getCellListByRow(this.thePuzzle, j));
+    		if (!this.checker.isComplete()) {
     			System.out.println("row: " + j);
     			return false;
     		}
     	}
     	
     	for (int k = 0; k < this.getMaxDimension(); k++) {
-    		c.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, k));
-    		if (!c.isComplete()) {
+    		this.checker.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, k));
+    		if (!this.checker.isComplete()) {
     			System.out.println("sq: " + k);
     			return false;
     		}
@@ -204,6 +220,29 @@ public class GameImpl implements Game {
     	
     	return true;
     }
+    
+    public Checker getChecker() {
+    	return this.checker;
+    }
+    
+    public List<Integer> getAllPossibleValues(Cell theCell) {
+    	this.checker.set(PuzzleHelper.getCellListByRow(this.getPuzzle(), theCell.getRowIndex()));
+    	Set<Integer> rowPossible = new HashSet<Integer> (this.checker.getUnusedValues());
+    	Set<Integer> rowImpossible = new HashSet<Integer> (this.checker.getUsedValues());
+    	
+    	this.checker.set(PuzzleHelper.getCellListByColumn(this.getPuzzle(), theCell.getColumnIndex()));
+    	Set<Integer> columnPossible = new HashSet<Integer> (this.checker.getUnusedValues());
+    	Set<Integer> columnImpossible = new HashSet<Integer> (this.checker.getUsedValues());
+    	
+    	rowPossible.removeAll(columnImpossible);
+    	columnPossible.removeAll(rowImpossible);
+    	
+    	rowPossible.addAll(columnPossible);
+    	
+    	return new ArrayList<Integer>(rowPossible);
+    	
+    }
+    
 
 }
 

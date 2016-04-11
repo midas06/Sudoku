@@ -16,7 +16,9 @@ public class Cell {
 	}
 	
 	public void addDigitValues(int[] newValues) {
-		this.digit.addValues(newValues);
+		if(!this.isFixed) {
+			this.digit.addValues(newValues);
+		}		
 	}	
 	
 	public Cell(GameImpl theGame) {
@@ -44,10 +46,9 @@ public class Cell {
 	}
 	
 	protected void calcSquare() {
-		int squareWidth, squareHeight, numColSquares, numRowSquares, squareRow, squareCol;
+		int squareWidth, squareHeight, numRowSquares, squareRow, squareCol;
 		squareWidth = this.theGame.getSquareWidth();
 		squareHeight = this.theGame.getSquareHeight();
-		numColSquares = (int)Math.sqrt(theGame.getMaxValue()) / squareHeight;
 		numRowSquares = (int)Math.sqrt(theGame.getMaxValue()) / squareWidth;
 		
 		squareCol = this.columnIndex / squareWidth;
@@ -61,10 +62,13 @@ public class Cell {
 		this.isFixed = true;
 	}
 	
-	public void clear() {
-		this.digit.clear();
+	public void toggleFixed() {
+		this.isFixed = !this.isFixed;
 	}
 	
+	public void clear() {
+		this.digit.clear();
+	}	
 	
 	public int getRowIndex() {
 		return this.rowIndex;

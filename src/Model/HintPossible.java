@@ -1,7 +1,8 @@
 package Model;
 
+import java.util.List;
+
 public interface HintPossible {
-	public boolean[] isPossible(int gridIndex);
-    public int[] possibles(int gridIndex);
+    public List<Integer> getUnusedValues();
 
 }

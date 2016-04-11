@@ -1,6 +1,7 @@
 package Model;
 
+import java.util.List;
+
 public interface HintImpossible {
-	public boolean[] isImpossible(int gridIndex);
-    public int[] impossibles(int gridIndex);
+    public List<Integer> getUsedValues();
 }

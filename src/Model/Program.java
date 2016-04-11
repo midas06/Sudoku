@@ -179,96 +179,117 @@ public class Program {
 		
 		
 		GameImpl g = new GameImpl();
+//		g.setMaxValue(36);
+//		
+//		g.finaliseInitialPuzzle();
+//		
+//		
+//		// line 1
+//		Cell c =  g.getCellByCoord(0, 0);
+//		g.setSingleValue(4, c);
+//		c =  g.getCellByCoord(1, 0);
+//		g.setSingleValue(5, c);
+//		c =  g.getCellByCoord(2, 0);
+//		g.setSingleValue(6, c);
+//		c =  g.getCellByCoord(3, 0);
+//		g.setSingleValue(2, c);
+//		c =  g.getCellByCoord(4, 0);
+//		g.setSingleValue(1, c);
+//		c =  g.getCellByCoord(5, 0);
+//		g.setSingleValue(3, c);
+//		
+//		// line 2
+//		c =  g.getCellByCoord(0, 1);
+//		g.setSingleValue(3, c);
+//		c =  g.getCellByCoord(1, 1);
+//		g.setSingleValue(1, c);
+//		c =  g.getCellByCoord(2, 1);
+//		g.setSingleValue(2, c);
+//		c =  g.getCellByCoord(3, 1);
+//		g.setSingleValue(5, c);
+//		c =  g.getCellByCoord(4, 1);
+//		g.setSingleValue(4, c);
+//		c =  g.getCellByCoord(5, 1);
+//		g.setSingleValue(6, c);
+//		System.out.println(g.exportMap());
+//		
+//		c =  g.getCellByCoord(0, 2);
+//		g.setSingleValue(5, c);
+//		c =  g.getCellByCoord(1, 2);
+//		g.setSingleValue(4, c);
+//		c =  g.getCellByCoord(2, 2);
+//		g.setSingleValue(3, c);
+//		c =  g.getCellByCoord(3, 2);
+//		g.setSingleValue(1, c);
+//		c =  g.getCellByCoord(4, 2);
+//		g.setSingleValue(6, c);
+//		c =  g.getCellByCoord(5, 2);
+//		g.setSingleValue(2, c);
+//		System.out.println(g.exportMap());
+//		
+//		c =  g.getCellByCoord(0, 3);
+//		g.setSingleValue(6, c);
+//		c =  g.getCellByCoord(1, 3);
+//		g.setSingleValue(2, c);
+//		c =  g.getCellByCoord(2, 3);
+//		g.setSingleValue(1, c);
+//		c =  g.getCellByCoord(3, 3);
+//		g.setSingleValue(3, c);
+//		c =  g.getCellByCoord(4, 3);
+//		g.setSingleValue(5, c);
+//		c =  g.getCellByCoord(5, 3);
+//		g.setSingleValue(4, c);
+//		System.out.println(g.exportMap());
+//		
+//		c =  g.getCellByCoord(0, 4);
+//		g.setSingleValue(2, c);
+//		c =  g.getCellByCoord(1, 4);
+//		g.setSingleValue(6, c);
+//		c =  g.getCellByCoord(2, 4);
+//		g.setSingleValue(5, c);
+//		c =  g.getCellByCoord(3, 4);
+//		g.setSingleValue(4, c);
+//		c =  g.getCellByCoord(4, 4);
+//		g.setSingleValue(3, c);
+//		c =  g.getCellByCoord(5, 4);
+//		g.setSingleValue(1, c);
+//		System.out.println(g.exportMap());
+//		
+//		c =  g.getCellByCoord(0, 5);
+//		g.setSingleValue(1, c);
+//		c =  g.getCellByCoord(1, 5);
+//		g.setSingleValue(3, c);
+//		c =  g.getCellByCoord(2, 5);
+//		g.setSingleValue(4, c);
+//		c =  g.getCellByCoord(3, 5);
+//		g.setSingleValue(6, c);
+//		c =  g.getCellByCoord(4, 5);
+//		g.setSingleValue(2, c);
+//		c =  g.getCellByCoord(5, 5);
+//		g.setSingleValue(5, c);
+//		System.out.println(g.exportMap());
+		
+		
+		g = new GameImpl();
 		g.setMaxValue(36);
+		g.setSingleValue(1, g.getCellByCoord(1, 0));
+		g.setSingleValue(6, g.getCellByCoord(2, 0));
+		g.setSingleValue(5, g.getCellByCoord(4, 0));
 		
-		g.finaliseInitialPuzzle();
+		g.setSingleValue(6, g.getCellByCoord(4, 1));
+		g.setSingleValue(2, g.getCellByCoord(5, 1));
 		
+		g.setSingleValue(6, g.getCellByCoord(5, 2));
 		
-		// line 1
-		Cell c =  g.getCellByCoord(0, 0);
-		g.addSingleValue(4, c);
-		c =  g.getCellByCoord(1, 0);
-		g.addSingleValue(5, c);
-		c =  g.getCellByCoord(2, 0);
-		g.addSingleValue(6, c);
-		c =  g.getCellByCoord(3, 0);
-		g.addSingleValue(2, c);
-		c =  g.getCellByCoord(4, 0);
-		g.addSingleValue(1, c);
-		c =  g.getCellByCoord(5, 0);
-		g.addSingleValue(3, c);
+		g.setSingleValue(3, g.getCellByCoord(0, 3));
 		
-		// line 2
-		c =  g.getCellByCoord(0, 1);
-		g.addSingleValue(3, c);
-		c =  g.getCellByCoord(1, 1);
-		g.addSingleValue(1, c);
-		c =  g.getCellByCoord(2, 1);
-		g.addSingleValue(2, c);
-		c =  g.getCellByCoord(3, 1);
-		g.addSingleValue(5, c);
-		c =  g.getCellByCoord(4, 1);
-		g.addSingleValue(4, c);
-		c =  g.getCellByCoord(5, 1);
-		g.addSingleValue(6, c);
+		g.setSingleValue(5, g.getCellByCoord(0, 4));
+		g.setSingleValue(3, g.getCellByCoord(1, 4));
+		
+		g.setSingleValue(4, g.getCellByCoord(1, 5));
+		g.setSingleValue(5, g.getCellByCoord(3, 5));
+		g.setSingleValue(2, g.getCellByCoord(4, 5));
+		
 		System.out.println(g.exportMap());
-		
-		c =  g.getCellByCoord(0, 2);
-		g.addSingleValue(5, c);
-		c =  g.getCellByCoord(1, 2);
-		g.addSingleValue(4, c);
-		c =  g.getCellByCoord(2, 2);
-		g.addSingleValue(3, c);
-		c =  g.getCellByCoord(3, 2);
-		g.addSingleValue(1, c);
-		c =  g.getCellByCoord(4, 2);
-		g.addSingleValue(6, c);
-		c =  g.getCellByCoord(5, 2);
-		g.addSingleValue(2, c);
-		System.out.println(g.exportMap());
-		
-		c =  g.getCellByCoord(0, 3);
-		g.addSingleValue(6, c);
-		c =  g.getCellByCoord(1, 3);
-		g.addSingleValue(2, c);
-		c =  g.getCellByCoord(2, 3);
-		g.addSingleValue(1, c);
-		c =  g.getCellByCoord(3, 3);
-		g.addSingleValue(3, c);
-		c =  g.getCellByCoord(4, 3);
-		g.addSingleValue(5, c);
-		c =  g.getCellByCoord(5, 3);
-		g.addSingleValue(4, c);
-		System.out.println(g.exportMap());
-		
-		c =  g.getCellByCoord(0, 4);
-		g.addSingleValue(2, c);
-		c =  g.getCellByCoord(1, 4);
-		g.addSingleValue(6, c);
-		c =  g.getCellByCoord(2, 4);
-		g.addSingleValue(5, c);
-		c =  g.getCellByCoord(3, 4);
-		g.addSingleValue(4, c);
-		c =  g.getCellByCoord(4, 4);
-		g.addSingleValue(3, c);
-		c =  g.getCellByCoord(5, 4);
-		g.addSingleValue(1, c);
-		System.out.println(g.exportMap());
-		
-		c =  g.getCellByCoord(0, 5);
-		g.addSingleValue(1, c);
-		c =  g.getCellByCoord(1, 5);
-		g.addSingleValue(3, c);
-		c =  g.getCellByCoord(2, 5);
-		g.addSingleValue(4, c);
-		c =  g.getCellByCoord(3, 5);
-		g.addSingleValue(6, c);
-		c =  g.getCellByCoord(4, 5);
-		g.addSingleValue(2, c);
-		c =  g.getCellByCoord(5, 5);
-		g.addSingleValue(5, c);
-		System.out.println(g.exportMap());
-		
-		System.out.println(g.isSolved());
 	}
 }

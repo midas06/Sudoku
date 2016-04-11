@@ -49,38 +49,38 @@ public class Maps {
 		
 		Cell theCell;
 		theCell = g.getCellByCoord(1, 0);
-		g.addSingleValue(1, theCell);
+		g.setSingleValue(1, theCell);
 		theCell = g.getCellByCoord(2, 0);
-		g.addSingleValue(6, theCell);
+		g.setSingleValue(6, theCell);
 		theCell = g.getCellByCoord(3, 0);
-		g.addSingleValue(5, theCell);
+		g.setSingleValue(5, theCell);
 		theCell = g.getCellByCoord(4, 0);
-		g.addSingleValue(4, theCell);
+		g.setSingleValue(4, theCell);
 		theCell = g.getCellByCoord(5, 0);
-		g.addSingleValue(3, theCell);
+		g.setSingleValue(3, theCell);
 		theCell = g.getCellByCoord(6, 0);
-		g.addSingleValue(2, theCell);
+		g.setSingleValue(2, theCell);
 		theCell = g.getCellByCoord(7, 0);
-		g.addSingleValue(0, theCell);
+		g.setSingleValue(0, theCell);
 		theCell = g.getCellByCoord(8, 0);
-		g.addSingleValue(7, theCell);
+		g.setSingleValue(7, theCell);
 		theCell = g.getCellByCoord(0, 0);
 		//g.addSingleValue(5, theCell);
 		int[] arr = new int[3];
 		arr[0] = 3;
 		arr[1] = 2;
 		arr[2] = 0;
-		g.addMultipleValues(arr, theCell);
+		g.setMultipleValues(arr, theCell);
 		
 		
 		theCell = g.getCellByCoord(3, 1);
-		g.addSingleValue(4,theCell);
+		g.setSingleValue(4,theCell);
 //		g.addSingleValueByCoord(6, 4, 1);
 //		g.addSingleValueByCoord(3, 5, 1);
 		
 //		g.addSingleValueByCoord(6, 5, 2);
 		theCell = g.getCellByCoord(0, 3);
-		g.addSingleValue(3, theCell);
+		g.setSingleValue(3, theCell);
 		
 //		g.addSingleValueByCoord(5, 0, 4);
 //		g.addSingleValueByCoord(3, 1, 4);
@@ -90,7 +90,7 @@ public class Maps {
 //		g.addSingleValueByCoord(2, 4, 5);
 		
 		theCell = g.getCellBySquare(3, 3);
-		g.addSingleValue(6, theCell);
+		g.setSingleValue(6, theCell);
 		
 		g.finaliseInitialPuzzle();
 		

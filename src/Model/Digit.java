@@ -13,7 +13,9 @@ public class Digit {
 		
 	public void addValues(int[] newValues) {
 		for (int i : newValues) {
-			this.allValues.add(i);
+			if (!this.allValues.contains(i)) {
+				this.allValues.add(i);
+			}			
 		}
 	}
 	
@@ -58,7 +60,6 @@ public class Digit {
 			sb.append(temp[temp.length - 1]);
 		}
 				
-		//return this.allValues.size() > -1 ? sb.toString() : "";
 		return sb.toString();
 	}
 	
@@ -71,11 +72,7 @@ public class Digit {
 		}
 		
 		this.addValues(intA);		
-	}
-	
-
-	
-	
+	}	
 }
 	
 	
