@@ -2,15 +2,11 @@ package Model;
 
 public class Cell {
 	
-	protected GameImpl theGame;
+	protected Game theGame;
 	protected int cellIndex, rowIndex, columnIndex, squareIndex;
 	protected Digit digit;
 	protected boolean isFixed;
 
-	public GameImpl getGame() {
-		return this.theGame;
-	}
-	
 	public Digit getDigit() {
 		return this.digit;
 	}
@@ -21,18 +17,18 @@ public class Cell {
 		}		
 	}	
 	
-	public Cell(GameImpl theGame) {
+	public Cell(Game theGame) {
 		this.theGame = theGame;
-		this.digit = new Digit();
+		this.digit = new DigitImpl();
 	}
 	
 	
-	public Cell(int newIndex, GameImpl theGame) {
+	public Cell(int newIndex, Game theGame) {
 		this.cellIndex = newIndex;
 		this.theGame = theGame;
 		this.calcRowColumn();
 		this.calcSquare();
-		this.digit = new Digit();
+		this.digit = new DigitImpl();
 	}
 	
 	protected void calcRowColumn() {
@@ -49,7 +45,7 @@ public class Cell {
 		int squareWidth, squareHeight, numRowSquares, squareRow, squareCol;
 		squareWidth = this.theGame.getSquareWidth();
 		squareHeight = this.theGame.getSquareHeight();
-		numRowSquares = (int)Math.sqrt(theGame.getMaxValue()) / squareWidth;
+		numRowSquares = this.theGame.getMaxDimension() / squareWidth;
 		
 		squareCol = this.columnIndex / squareWidth;
 		squareRow = this.rowIndex / squareHeight;
@@ -130,22 +126,7 @@ public class Cell {
 		this.calcRowColumn();
 		this.calcSquare();		
 	}
-	
-	
-	public String getValues() {
-		StringBuilder sb = new StringBuilder();
 		
-		sb.append("CellI: " + this.cellIndex);
-		sb.append("RowI: " + this.rowIndex);
-		sb.append("ColI: " + this.columnIndex);
-		sb.append("SquareI: " + this.squareIndex);
-		sb.append("Digit: " + this.digit.toString());
-		sb.append("Fixed: " + this.isFixed);
-		
-		return sb.toString();
-		
-	}
-	
 }
     
 

@@ -48,7 +48,7 @@ public class Checker implements Validating, HintPossible, HintImpossible {
 		return false;
 	}
 	
-	public List<Integer> acceptableArrayToList() {
+	protected List<Integer> acceptableArrayToList() {
 		List<Integer> comparisonList = new ArrayList<Integer>();
 		for (int i = 0; i < this.acceptableValues.length; i++) {
 			comparisonList.add(this.acceptableValues[i]);
@@ -69,10 +69,7 @@ public class Checker implements Validating, HintPossible, HintImpossible {
 		Collections.sort(this.usedValues);
 		
 		return comparisonList.equals(this.usedValues);
-	}
-	
-	
-	// stream photos?
+	}	
 	
 	public List<Integer> getUnusedValues() {
 		Set<Integer> unusedHash = new HashSet<Integer>(this.acceptableArrayToList());
@@ -80,9 +77,6 @@ public class Checker implements Validating, HintPossible, HintImpossible {
 		
 		unusedHash.removeAll(usedHash);
 		return new ArrayList<Integer>(unusedHash);
-	}
+	}	
 	
-	
-		
-		
 }

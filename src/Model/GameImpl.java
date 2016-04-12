@@ -12,7 +12,7 @@ public class GameImpl implements Game, Gets, Sets {
 	private int maximum, squareWidth, squareHeight;
 	private Checker checker;
 	protected List<Cell> thePuzzle;
-	public List<List<String>> moveHistory;
+	private List<List<String>> moveHistory;
 	private PuzzleStringBuilder psb;
 	private boolean mapIsSet;
 
@@ -23,7 +23,7 @@ public class GameImpl implements Game, Gets, Sets {
 		this.mapIsSet = false;
 	}
 		
-	public void init() {
+	protected void init() {
 		int count = 0;
 		
 		while (count < this.maximum) {
@@ -46,7 +46,7 @@ public class GameImpl implements Game, Gets, Sets {
 		this.init();		
 	}
 	
-	public void setSquares() {
+	protected void setSquares() {
 		try {
 			if (this.maximum == 81) {
 				this.setSquareHeight(3);
@@ -89,11 +89,7 @@ public class GameImpl implements Game, Gets, Sets {
     public List<Cell> getPuzzle() {
     	return this.thePuzzle;
     }
-    
-    public void set(int[] cellValues) {
-    	
-    }
-    
+        
     public void setSquareWidth(int squareWidth) {
     	this.squareWidth = squareWidth;
     }
@@ -136,20 +132,44 @@ public class GameImpl implements Game, Gets, Sets {
     
     
     public void setSingleValue(int newValue, Cell theCell) {    	
-    	int[] arr = new int[1];
-		arr[0] = newValue;
-		theCell.addDigitValues(arr);
-		if (this.mapIsSet) {
-			this.takeSnapshot();
-		}
-		
+    	try {
+    		if (newValue > 0 && newValue <= this.getMaxDimension()) {
+    			int[] arr = new int[1];
+    			arr[0] = newValue;
+    			theCell.addDigitValues(arr);
+    			if (this.mapIsSet) {
+    				this.takeSnapshot();
+    			}
+    		} else {
+    			throw new InvalidDimensionException();
+    		}
+    	} catch (InvalidDimensionException e) {
+    		System.out.println("Invalid input");	
+    	}		
     }
     
     public void setMultipleValues(int[] newValues, Cell theCell) {
-		theCell.addDigitValues(newValues);
-		if (this.mapIsSet) {
-			this.takeSnapshot();
-		}
+    	try {
+    		if (this.testArrayValidity(newValues)) {
+    			theCell.addDigitValues(newValues);
+    			if (this.mapIsSet) {
+    				this.takeSnapshot();
+    			}
+    		} else {
+    			throw new InvalidDimensionException();
+    		}
+    	} catch (InvalidDimensionException e){
+    		System.out.println("Invalid input");	
+    	}    	
+    }
+    		
+    protected boolean testArrayValidity(int[] newValues) {
+    	for (int i : newValues) {
+    		if (i <= 0 || i > this.getMaxDimension()) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
     
     protected void takeSnapshot() {
@@ -175,7 +195,7 @@ public class GameImpl implements Game, Gets, Sets {
     	return this.psb.toString();
     }
     
-    public List<String> serialize() {
+    protected List<String> serialize() {
     	List<String> srlPuzzle = new ArrayList<String> ();
     	for (Cell c : this.thePuzzle) {
     		srlPuzzle.add(c.serialize());

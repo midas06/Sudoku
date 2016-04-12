@@ -387,11 +387,14 @@ public class Program {
 		g.setSingleValue(5, g.getCellBySquare(5, 1));
 		g.setSingleValue(6, g.getCellBySquare(6, 1));
 		g.setSingleValue(8, g.getCellBySquare(7, 1));
-		g.setSingleValue(9, g.getCellBySquare(8, 1));
-		
-		
 		
 		g.finaliseInitialPuzzle();
+		
+		g.setSingleValue(10, g.getCellBySquare(8, 1));
+		
+		System.out.println(g.exportMap());
+		g.undo();
+		
 		
 		System.out.println(g.exportMap());
 
