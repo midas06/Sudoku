@@ -22,7 +22,7 @@ public class GameImpl implements Game, Gets, Sets {
 		this.moveHistory = new ArrayList<List<String>>();
 		this.mapIsSet = false;
 	}
-		
+	
 	protected void init() {
 		int count = 0;
 		
@@ -144,8 +144,8 @@ public class GameImpl implements Game, Gets, Sets {
     			throw new InvalidDimensionException();
     		}
     	} catch (InvalidDimensionException e) {
-    		System.out.println("Invalid input");	
-    	}		
+    		System.out.println("Invalid input");
+    	}
     }
     
     public void setMultipleValues(int[] newValues, Cell theCell) {
@@ -217,7 +217,6 @@ public class GameImpl implements Game, Gets, Sets {
     	for (int i = 0; i < this.getMaxDimension(); i++) {
     		this.checker.set(PuzzleHelper.getCellListByColumn(this.thePuzzle, i));
     		if (!this.checker.isComplete()) {
-//    			System.out.println("col: " + i);
     			return false;
     		}
     	}
@@ -225,7 +224,6 @@ public class GameImpl implements Game, Gets, Sets {
     	for (int j = 0; j < this.getMaxDimension(); j++) {
     		this.checker.set(PuzzleHelper.getCellListByRow(this.thePuzzle, j));
     		if (!this.checker.isComplete()) {
-//    			System.out.println("row: " + j);
     			return false;
     		}
     	}
@@ -233,7 +231,6 @@ public class GameImpl implements Game, Gets, Sets {
     	for (int k = 0; k < this.getMaxDimension(); k++) {
     		this.checker.set(PuzzleHelper.getCellListBySquare(this.thePuzzle, k));
     		if (!this.checker.isComplete()) {
-//    			System.out.println("sq: " + k);
     			return false;
     		}
     	}

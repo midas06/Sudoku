@@ -1,0 +1,67 @@
+GameImpl:
+
+	init()
+		needs max value to be set.
+		creates new Cells, and puts them into the thePuzzle List.
+		called by GameImpl.setMaxValue()
+	
+	setSquares()
+		depending on the max value, sets the width and height of Squares
+		called by GameImpl.setMaxValue()
+	
+	
+	testArrayValidity(int[] newValues) : boolean
+		returns true if the input value is within the acceptable range (ie. 1-9 for a 9x9 puzzle)
+		called by GameImpl.setMultipleValues()
+	
+	serialize() : List<String>
+		calls Cell.serialize() on each cell, which returns a String representing the Cell.
+		stores these Strings in a List, and returns the List.
+		called by GameImpl.takeSnapshot()
+	
+	takeSnapshot()
+		adds the List of Strings from GameImpl.serialize() to the moveHistory List of List of Strings.
+		called by GameImpl.finaliseInitialPuzzle(), setSingleValue() and setMultipleValues()
+	
+
+	
+Cell:
+
+	calcRowColumn()
+		calculates the row index and column index of the Cell, based on the dimensions of the puzzle, and its Cell index.
+		called by the constructor, and Cell.deseralize()
+		
+	calcSquare()
+		calculates the square index of the Cell, based on the dimensions of the puzzle and dimensions of the squares
+		called by the constructor, and Cell.deseralize()
+				
+
+		
+Checker:
+
+	init(int maxValue)
+		creates a new int[] for Checker.acceptableValues, and adds the range of acceptable values to the array.
+		called by Checker.set()
+		
+	setUsedValues()
+		creates a new List<Integer> for Checker.usedValues, and adds all used values of the Cells in the Checker.theList List to it
+		called by Checker.set()
+		
+	acceptableArrayToList()
+		helper function - parses the int[] of acceptable values into a List<Integer>
+		called by Checker.isComplete() and Checker.getUnusedValues()
+		
+		
+		
+PuzzleStringBuilder:
+
+	generateRow(int rowIndex)
+		takes a List of Cells from the row index, and creates a String representing the values stored in each Cell.
+		called by PuzzleStringBuilder.toString()
+		
+	generateLineBreak(int maxWidth)
+		generates a string of dashes, used to indicate the bottom of a Cell. 
+		Length is based on the width of the puzzle
+		called by PuzzleStringBuilder.toString()
+	
+	

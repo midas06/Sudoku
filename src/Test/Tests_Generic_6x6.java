@@ -130,6 +130,28 @@ public class Tests_Generic_6x6 extends TestCase {
 		
 	}
 	
+	
+	// Must have 3: unfix a cell
+	
+	@Test
+	public void test_fixCells_toggle() {
+		
+		Cell theCell = g.getCellByCoord(1, 0);
+		boolean expected = true;	
+		boolean result = theCell.getIsFixed();
+		
+		assertTrue(this.getErrorMsg(String.valueOf(expected), String.valueOf(result)), result == expected);	
+		
+		boolean expected_After = false;
+		
+		theCell.toggleFixed();
+		
+		result = theCell.getIsFixed();
+		
+		assertTrue(this.getErrorMsg(String.valueOf(expected_After), String.valueOf(result)), result == expected_After);	
+		
+	}
+	
 	// Must have 4: enter a value for a cell
 	
 	@Test
@@ -283,6 +305,23 @@ public class Tests_Generic_6x6 extends TestCase {
 		
 		Checker c = g.getChecker();
 		c.set(PuzzleHelper.getCellListByColumn(g.getPuzzle(), 0));
+		List<Integer> result = c.getUnusedValues();
+		
+		assertTrue(this.getErrorMsg(String.valueOf(expected), String.valueOf(result)), expected.equals(result));
+		
+	}
+	
+	// get possible values by square
+	@Test
+	public void test_posValues_sq() {		
+
+		List<Integer> expected = new ArrayList<Integer> ();
+		expected.add(1);
+		expected.add(2);
+		expected.add(6);
+		
+		Checker c = g.getChecker();
+		c.set(PuzzleHelper.getCellListBySquare(g.getPuzzle(), 4));
 		List<Integer> result = c.getUnusedValues();
 		
 		assertTrue(this.getErrorMsg(String.valueOf(expected), String.valueOf(result)), expected.equals(result));
